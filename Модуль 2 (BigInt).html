@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+
+  <p>...</p>
+  
+  <script charset="utf-8">
+    "use strict";
+   
+
+    /* Module 2        
+       Написать модуль, который способен выполнять операции с числами любой длины.
+       4 метода: для сложения, умножения, вычитания и деления.
+    */
+
+    let a = prompt('Введите число a', '333');
+    let b = prompt('Введите число b', '999');    
+    
+    // сложение
+    function sumBigInt(a, b) {
+     
+    let arrA = a.split('');
+    let arrB = b.split('');
+    let arrC = [];      
+
+    if ( arrA.length < arrB.length ) {
+        arrC = arrA;
+        arrA = arrB;
+        arrB = arrC;
+        arrC = [];
+    }              
+        
+        for (let i = 0; i < (arrA.length - arrB.length); i++){ 
+        arrB.splice(0, 0, '0'); 
+        }       
+
+    for (let i = arrA.length-1; i >= 0; i--) {         
+         arrC.splice(0, 0, (+arrA[i] + +arrB[i]));         
+    }    
+    
+    return sumArr(arrC);     
+  }
+    
+    alert ( `сумма чисел  ${a}  +  ${b}  =   ${sumBigInt(a, b)}` );
+    
+
+    // умножение
+    function multiplicationBigInt(a, b) {
+
+      let arrA = a.split('');
+      let arrB = b.split('');
+      let arrC; 
+      let arrD = [];      
+             
+      for (let j = arrB.length-1; j >= 0; j--) {
+        
+        arrC = [];
+        for (let i = arrA.length-1; i >= 0; i--) {
+            arrC.splice(0, 0, (arrA[i] * arrB[j]));
+        }    
+        arrD.splice(0, 0, sumArr(arrC));
+      }
+      return sumArr(arrD);      
+    }
+
+    function sumArr(arr) {
+      let sum = 0;
+      let multiplier = 1;
+        for (let i = arr.length-1; i >= 0; i--) {
+            sum = sum + arr[i] * multiplier;
+            multiplier = multiplier * 10;
+        }
+      return sum;
+    }     
+
+    alert ( `произведение чисел  ${a}  x  ${b}  =  ${multiplicationBigInt(a, b)}` );
+
+     
+    // вычитание    
+    function subtractionBigInt(a, b) {
+      
+      let sign = 1;
+      if (+a < +b) sign = -1;
+      
+      let arrA = a.split('');
+      let arrB = b.split('');
+      let arrC = []; 
+
+      if ( arrA.length < arrB.length ) {
+        arrC = arrA;
+        arrA = arrB;
+        arrB = arrC;
+        arrC = [];
+      }
+
+      for (let i = 0; i <= (arrA.length - arrB.length); i++){ 
+        arrB.splice(0, 0, '0'); 
+      }
+
+      for (let i = arrA.length-1; i >= 0; i--) {
+        arrC.splice(0, 0, (arrA[i] - arrB[i]));         
+      }
+
+      return sumArr(arrC) * sign;
+    }
+
+     alert ( `вычитание чисел  ${a}  -  ${b}  =  ${subtractionBigInt(a, b)}` );
+     
+
+    // деление
+    function divisionBigInt(a, b) {
+
+      let arrA = a.split('');      
+      let arrC = []; // результаты от деления      
+      let interim ='';     
+
+      let k = 0;    
+      
+        for (let i = 0; i < arrA.length-1; i++) {            
+            
+          if ( arrA[i] < b ) { 
+
+            interim = String(arrA[i]) + String(arrA[i+1]);
+            arrA[i] = '0';            
+            arrA[i+1] = (interim % b);
+
+          } else {                                    
+            
+            interim = String(arrA[i]);          
+            arrA[i] = (interim % b);
+            i = i - 1;
+          }
+          
+          arrC[k] =  (interim - (interim % b))/b; // результат от деления  
+          k++;
+        }          
+
+        if (arrC[0] == 0) arrC.splice(0, 1);
+        if (arrC[0] == 0) arrC.splice(0, 1);
+             
+
+      let result = arrC.join('');
+
+      // дробная часть
+      let part = String( ((a - (result * b)) / b).toFixed(3) );       
+      return result + part.slice(1);           
+    }  
+      
+      alert( `деление чисел  ${a}  /  ${b}  =  ${divisionBigInt(a, b)}` );
+
+
+  </script>
+ 
+  <p>...</p>
+
+</body>
+
+</html>

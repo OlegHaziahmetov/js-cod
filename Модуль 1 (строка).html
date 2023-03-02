@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+
+  <p>...</p>
+  
+  <script charset="utf-8">
+    "use strict";
+   //*
+
+    // Module 1
+    
+    // 1.1. Преобразование строки к нижнему регистру, но первая буква большая. “Abscd”
+
+    function lowercase(str) {
+        if (!str) return str;        
+        let strNew = str.toLowerCase();
+        return strNew[0].toUpperCase() + strNew.slice(1);
+    }
+        
+    //let str = prompt('Введите текст:', '');    
+    // let strNew = lowercase(str);
+    
+    alert( `Новый текст: ${lowercase( prompt('Введите текст:', '') )}`);
+
+
+    // 1.2. Преобразование строки с целью правильно расстановки пробелов.
+
+    let text = `Вот пример строки,в которой     используются знаки препинания.После знаков должны стоять пробелы ,
+    а перед знаками их быть не должно .    Если есть лишние подряд идущие пробелы, они должны быть устранены.`
+            
+    // удаление дополнительных пробелов
+    
+    let arr = text.split(' ');    
+    let strNew = '';       
+
+    for (let i = 0; i < arr.length; i++) {     
+    if (arr[i] == '' ) continue;     
+     strNew = strNew + ' ' + arr[i];      
+   }
+    // добавление пробелов после знаков препинания
+
+    arr = strNew.split('');
+    strNew = '';
+    
+    for (let i = 0; i < arr.length; i++) {        
+    if (arr[i] == ',' || arr[i] == '.') {
+      strNew = strNew + arr[i] + ' ';
+    } else {    
+      strNew = strNew + arr[i];      
+    }
+  }    
+    // удаление пробелов между словом и знаком препинания 
+
+    arr = strNew.split('');
+    strNew = '';
+
+    for (let i = 0; i < arr.length; i++) {        
+        if (arr[i] == ' ' && (arr[i+1] == ',' || arr[i+1] == '.')) {
+          strNew = strNew + arr[i+1];        
+        } else {    
+          strNew = strNew + arr[i];      
+        }
+    }   
+    
+    // удаление дублирующися знаков припенания
+    
+    arr = strNew.split('');
+    strNew = '';
+    
+    for (let i = 0; i < arr.length; i++) {    
+    if ((arr[i] == '.' || arr[i] == ',') && (arr[i+1] == ',' || arr[i+1] == '.') ) continue;
+         strNew = strNew + arr[i];
+
+    }
+
+    alert (`Исходный текст: \n ${text} \n
+           // Обработанный текст: \n ${strNew} `);
+
+    
+    // 1.3. Посдчитывающий кол-во слов в строке.
+
+        
+    function numberLetters (str) {
+      let arr = str.split(' ');
+      //alert (arr);
+      let number = 0;
+      for (let i = 0; i < arr.length; i++) {               
+        if ( arr[i] != '' &&  arr[i] != '\n' ) {
+           number = number + 1;
+           //alert (`${i} : ${number} : ${arr[i]}`);
+        }            
+        
+     } return number;
+    }
+    
+    alert ( `Количество слов в строке: \n "${strNew}" \n равно: ${numberLetters(strNew)}` );
+    
+    //*/
+
+    // 1.4. Подсчитывающий, уникальные слова. “Текст, в котором слово текст несколько раз встречается и слово тоже”
+    // - в ответе, что “слово - 2 раза, текст - 2 раза, в - 1 раз, несколько - 1 раз“. 
+    // Самостоятельно придумать наиболее удачную структуру данных для ответа.
+
+    //*
+    
+    arr = []; 
+    
+    function numberWords(str, wd) {
+      str = str.toLowerCase();
+      arr = str.split('');
+      str = '';
+      for (let i = 0; i < arr.length; i++) {    
+          if (arr[i] == '.' || arr[i] == ',') continue;
+         str = str + arr[i];
+      }       
+      
+      arr = str.split(' ');
+      let number = 0;      
+      for (let i = 0; i < arr.length; i++) {               
+        if ( arr[i] == wd ) {
+           number = number + 1;           
+        }            
+      } return number;
+    }
+    //*/
+
+    text = 'Текст, в котором слово текст несколько раз встречается и слово тоже.';       
+    numberWords(text, '');      
+    let set = new Set();
+    let find = '\n .............................................................. \n';
+    
+    for (let i = 0; i < arr.length; i++) {
+      set.add(arr[i]);
+    }
+    
+    for (let value of set) {    
+      //alert( `${value} : ${numberWords(text, value)}`);      
+      find = find + value + ' - ' + numberWords(text, value) + ' шт. ' + '\n';
+    }
+
+    alert (`${text} ${find}`);
+    
+
+  </script>
+ 
+  <p>...</p>
+
+</body>
+
+</html>

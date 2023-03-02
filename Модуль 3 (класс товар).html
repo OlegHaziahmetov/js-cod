@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+
+  <p>...</p>
+  
+  <script charset="utf-8">
+    "use strict";
+   
+
+    /* Module 3
+    Создать класс данных “Товар” c полями:
+    Название
+    Цена
+    Количество
+    Описание
+    Наполнить массив объектами такого класса.
+    */
+    
+    class Product {
+      constructor (name, price, quantity, description) { 
+      
+      this.name = name;
+      this.price = price;
+      this.quantity = quantity;
+      this.description = description;    
+      }
+    }
+
+     let arr = [new Product('Nescafefd', 2, 24, 'Кофе растворимый-abc'),
+     new Product('fdMakfa', 94.99, 5, 'Мука-abc'), new Product('Milk', 67.50, 10, 'Молоко'), 
+     new Product('----fd', 2, 6, '-abc'), new Product('fd---', 2, 10, '--abc')
+    ];
+        
+    /* 
+    Написать метод, который получает строку вида
+    "name-contains-fd&price-=2&quantity->5&description-ends-abc"
+    "name-starts-fd&quantity-=5"
+    На выходе возвращает массив, только с подходящими объектами
+    возможны (contains, starts, ends для строковых и <, =, >, <=, >= для числовых)
+    */
+
+    let str1 = 'name-contains-fd&price-=2&quantity->5&description-ends-abc';
+    let arrNew = []; 
+    let j = 0;    
+    
+    for (let i = 0; i < arr.length; i++) {
+      if (criterion(arr[i].name, arr[i].price, arr[i].quantity, arr[i].description, str1)) {
+        
+        arrNew[j] = new Product(arr[i].name, arr[i].price, arr[i].quantity, arr[i].description);
+        j++;
+      }
+     }
+
+     for (let i = 0; i < arrNew.length; i++) {
+        alert (`${arrNew[i].name} ${arrNew[i].price} ${arrNew[i].quantity} ${arrNew[i].description}`);
+
+     }
+
+
+     function criterion(name, price, quantity, description, str) {
+       
+      let arr = str.split('&');       
+      let crt1 = 0;
+      let crt2 = 0;
+      let crt3 = 0;
+      let crt4 = 0;      
+            
+      if ( name.includes(arr[0].slice(arr[0].length-2)) ) crt1 = 1;        
+      if ( arr[1].slice(arr[1].length-1) == price ) crt2 = 1;      
+      if ( quantity > arr[2].slice(arr[2].length-1) ) crt3 = 1;          
+      if ( description.includes(arr[3].slice(arr[3].length-3)) ) crt4 = 1;      
+      
+      if ( crt1 == 1 && crt2 == 1 && crt3 == 1 && crt4 == 1 ) {
+          return true;
+        } else {
+          return false;
+        }
+     }
+
+
+    
+
+  </script>
+ 
+  <p>...</p>
+
+</body>
+
+</html>
